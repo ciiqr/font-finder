@@ -1,6 +1,7 @@
-import { TrashIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon, TrashIcon } from "@radix-ui/react-icons";
 import localFont from "next/font/local";
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 import { fonts as defaultFonts } from "~/fonts";
 
@@ -22,7 +23,7 @@ export default function Home() {
                 <title>font-finder</title>
                 <link rel="icon" href="/favicon.png" />
             </Head>
-            <main className="flex flex-col p-1">
+            <main className="flex h-full flex-col justify-between p-1">
                 <input
                     className="rounded-sm border-2 border-slate-500 bg-slate-50 p-2"
                     value={text}
@@ -64,6 +65,30 @@ export default function Home() {
                         <p className="text-2xl">no guys?</p>
                     )}
                 </div>
+                <footer className="flex flex-row justify-between">
+                    <p className="text-xs">
+                        Includes all{" "}
+                        <Link
+                            className="text-blue-500 underline"
+                            href="https://fonts.google.com/knowledge/introducing_type/introducing_variable_fonts"
+                        >
+                            variable
+                        </Link>{" "}
+                        google fonts through{" "}
+                        <Link
+                            className="text-blue-500 underline"
+                            href="https://nextjs.org/docs/pages/api-reference/components/font"
+                        >
+                            next/font
+                        </Link>
+                    </p>
+                    <Link
+                        target="_blank"
+                        href="https://github.com/ciiqr/font-finder"
+                    >
+                        <GitHubLogoIcon />
+                    </Link>
+                </footer>
             </main>
         </>
     );
