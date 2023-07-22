@@ -5,9 +5,6 @@
             "cache": false,
             "persistent": true
         },
-        "type-check": {
-            "cache": false
-        },
         "build": {
             // TODO: figure out outputs
             // "outputs": [".next/**", "!.next/cache/**"],

@@ -59,7 +59,7 @@ dev::start() {
 dev::lint() {
     check-package-lock
     shellcheck-all
-    turbo type-check
+    tsc -b
     eslint .
     prettier --loglevel warn --check .
 }
