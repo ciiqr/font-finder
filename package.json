@@ -1,0 +1,28 @@
+{
+    "name": "font-finder",
+    "version": "0.0.0",
+    "private": true,
+    "license": "UNLICENSED",
+    "type": "module",
+    "workspaces": [
+        "./apps/*"
+    ],
+    "scripts": {
+        "prepare": "cp -n .env.example .env || true; husky install"
+    },
+    "devDependencies": {
+        "@pentible/check-package-lock": "0.74.0",
+        "@pentible/eslint-config": "0.74.0",
+        "@pentible/eslint-config-prettier": "0.74.0",
+        "@pentible/prettier": "0.74.0",
+        "@pentible/shellcheck-all": "0.74.0",
+        "@pentible/tsconfig": "0.74.0",
+        "husky": "7.0.4",
+        "lint-staged": "12.5.0",
+        "prettier": "2.8.7",
+        "tsup": "7.1.0",
+        "tsx": "3.12.7",
+        "turbo": "1.10.8",
+        "typescript": "5.0.3"
+    }
+}

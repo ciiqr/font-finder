@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+set -e
+
+declare script_dir
+script_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+declare repo_dir
+repo_dir="$(dirname "$script_dir")"
+
+# load direnv environment (in case we're run from outside the project directory)
+eval "$(cd "$repo_dir" && direnv export bash 2> /dev/null)"
+
+dev::usage() {
+    echo 'usage: dev <command>'
+    echo '       dev initial setup    # install app and dev env dependencies'
+    echo '       dev reset            # deletes temp files and sets project back up'
+    echo '       dev start            # run dev server'
+    echo '       dev lint             # run linters'
+    echo '       dev lint fix         # fix auto-fixable linter errors'
+    exit 1
+}
+
+dev::initial::setup() {
+    cd "$repo_dir"
+
+    echo '==> install nix'
+    # TODO: should skip if already installed... (or update?)
+    sh <(curl -L https://nixos.org/nix/install)
+    # TODO: this isn't the greatest way to do this... would be good if this was non-destructure of an existing config
+    echo 'experimental-features = nix-command flakes' > ~/.config/nix/nix.conf
+
+    echo '==> install direnv'
+    brew install direnv
+
+    echo '==> allow direnv to load project directory'
+    direnv allow
+
+    echo '==> dev reset'
+    dev::reset
+}
+
+dev::reset() {
+    cd "$repo_dir"
+
+    echo '==> delete git ignored files'
+    git clean -ffdX -e '!.env'
+
+    echo '==> reload direnv'
+    direnv reload
+
+    echo '==> install dependencies'
+    npm install
+}
+
+dev::start() {
+    turbo dev
+}
+
+dev::lint() {
+    check-package-lock
+    shellcheck-all
+    turbo type-check
+    eslint .
+    prettier --loglevel warn --check .
+}
+
+dev::lint::fix() {
+    eslint --fix .
+    prettier --loglevel warn --write .
+}
+
+# TODO: switch to a more standard command parser once we actually need something dynamic
+case "$*" in
+    'initial setup') dev::initial::setup ;;
+    reset) dev::reset ;;
+    start) dev::start ;;
+    lint) dev::lint ;;
+    'lint fix') dev::lint::fix ;;
+    *) dev::usage ;;
+esac
