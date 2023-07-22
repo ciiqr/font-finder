@@ -1,23 +1,20 @@
 import { TrashIcon } from "@radix-ui/react-icons";
+import localFont from "next/font/local";
 import Head from "next/head";
 import { useState } from "react";
+import { fonts as defaultFonts } from "~/fonts";
+
+const adobeNotDefFont = localFont({
+    src: "../../public/Adobe-NotDef-Regular.ttf",
+});
 
 export default function Home() {
-    const [text, setText] = useState("Aa");
-    const fonts = [
-        { id: "nope" },
-        { id: "yep" },
-        { id: "yep-1" },
-        { id: "yep-2" },
-        { id: "yep-3" },
-        { id: "yep-4" },
-        { id: "yep-5" },
-        { id: "yep-6" },
-        { id: "yep-7" },
-        { id: "yep-8" },
-        { id: "yep-9" },
-        { id: "yep-10" },
-    ];
+    // TODO: maybe have pre defined character sets you can cycle through (Aa, Bb, ..., +-=, '", fl, etc)
+    const [text, setText] = useState(
+        "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789+-=~`@,.,@",
+    );
+    // TODO: could store fonts in url...
+    const [fonts, setFonts] = useState(defaultFonts);
 
     return (
         <>
@@ -27,7 +24,7 @@ export default function Home() {
             </Head>
             <main className="flex flex-col p-1">
                 <input
-                    className="border-2 border-slate-500 bg-slate-50 p-2"
+                    className="rounded-sm border-2 border-slate-500 bg-slate-50 p-2"
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                 />
@@ -35,22 +32,29 @@ export default function Home() {
                     {fonts.length > 0 ? (
                         fonts.map((font) => (
                             <div
-                                key={font.id}
-                                className="relative flex aspect-square w-32 items-center justify-center overflow-hidden border-2 border-slate-500"
-                                title={font.id}
+                                key={font.name}
+                                className="relative flex min-h-[4rem] min-w-[4rem] justify-center overflow-hidden rounded-sm border-2 border-slate-500"
+                                title={font.name}
                             >
                                 <span
-                                    key={font.id}
-                                    className=" text-center text-2xl"
+                                    className="text-center text-2xl"
+                                    style={{
+                                        overflowWrap: "anywhere",
+                                        fontFamily: `${font.css.style.fontFamily}, ${adobeNotDefFont.style.fontFamily}`,
+                                    }}
                                 >
                                     {text}
                                 </span>
                                 <button
                                     className="absolute bottom-1 right-1 rounded-sm bg-red-500 p-1 text-white"
                                     type="button"
-                                    onClick={() => {
-                                        console.log("delete", font.id);
-                                    }}
+                                    onClick={() =>
+                                        setFonts(
+                                            fonts.filter(
+                                                (f) => f.name !== font.name,
+                                            ),
+                                        )
+                                    }
                                 >
                                     <TrashIcon />
                                 </button>
