@@ -1,9 +1,15 @@
 import { GitHubLogoIcon, TrashIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
 import localFont from "next/font/local";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import { fonts as defaultFonts } from "~/fonts";
+
+const FontInfoDialog = dynamic(
+    async () => (await import("~/components/font-info-dialog")).FontInfoDialog,
+    { ssr: false },
+);
 
 const adobeNotDefFont = localFont({
     src: "../../public/Adobe-NotDef-Regular.ttf",
@@ -59,6 +65,9 @@ export default function Home() {
                                 >
                                     <TrashIcon />
                                 </button>
+                                {/* TODO: show how to use (next snippet) */}
+                                {/* TODO: link to google font */}
+                                <FontInfoDialog font={font} />
                             </div>
                         ))
                     ) : (

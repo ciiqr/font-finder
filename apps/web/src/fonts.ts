@@ -1,3 +1,4 @@
+import type { NextFont } from "next/dist/compiled/@next/font";
 import {
     Advent_Pro,
     Akshar,
@@ -604,7 +605,12 @@ const yanoneKaffeesatz = Yanone_Kaffeesatz({ subsets: ["latin-ext"] });
 const yrsa = Yrsa({ subsets: ["latin-ext"] });
 const ysabeau = Ysabeau({ subsets: ["latin-ext"] });
 
-export const fonts = [
+export interface Font {
+    name: string;
+    css: NextFont;
+}
+
+export const fonts: Font[] = [
     { name: "Advent Pro", css: adventPro },
     { name: "Akshar", css: akshar },
     { name: "Albert Sans", css: albertSans },
