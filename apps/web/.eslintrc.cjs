@@ -1,3 +1,4 @@
+/** @type {import('eslint').ESLint.ConfigData} */
 module.exports = {
     extends: [
         "@pentible/eslint-config-node",
@@ -14,4 +15,13 @@ module.exports = {
             },
         },
     },
+    overrides: [
+        {
+            files: "src/components/font-info-dialog.tsx",
+            rules: {
+                "react/jsx-props-no-spreading": "off",
+                "react/no-array-index-key": "off",
+            },
+        },
+    ],
 };

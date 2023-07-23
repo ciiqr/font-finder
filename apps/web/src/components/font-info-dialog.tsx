@@ -8,13 +8,72 @@ import {
     DialogTrigger,
 } from "@radix-ui/react-dialog";
 import {
+    CopyIcon,
     Cross2Icon,
     ExternalLinkIcon,
     InfoCircledIcon,
 } from "@radix-ui/react-icons";
 import { camelCase } from "moderndash";
 import Link from "next/link";
+import type { PrismTheme } from "prism-react-renderer";
+import { Highlight, themes } from "prism-react-renderer";
 import type { Font } from "~/fonts";
+
+interface CodeBlockProps {
+    code: string;
+    language: string;
+    theme: PrismTheme;
+    lineNumbers?: boolean;
+    copyButton?: boolean;
+}
+
+function CodeBlock({
+    code,
+    language,
+    theme,
+    lineNumbers = false,
+    copyButton = false,
+}: CodeBlockProps) {
+    return (
+        <div className="relative">
+            {Boolean(copyButton) && (
+                <button
+                    className="absolute right-1 top-1 rounded-sm p-1 text-slate-200"
+                    type="button"
+                    onClick={() => {
+                        // TODO: add a toast
+                        void navigator.clipboard.writeText(code);
+                    }}
+                >
+                    <CopyIcon />
+                </button>
+            )}
+            <Highlight theme={theme} code={code} language={language}>
+                {({ style, tokens, getLineProps, getTokenProps }) => (
+                    <pre className="rounded-sm text-xs" style={style}>
+                        {tokens.map((line, i) => (
+                            <div key={i} {...getLineProps({ line })}>
+                                {Boolean(lineNumbers) && (
+                                    <span className="inline-block w-4">
+                                        {i + 1}
+                                    </span>
+                                )}
+                                {line.map((token, key) => (
+                                    <span
+                                        key={key}
+                                        {...getTokenProps({
+                                            token,
+                                        })}
+                                    />
+                                ))}
+                            </div>
+                        ))}
+                    </pre>
+                )}
+            </Highlight>
+        </div>
+    );
+}
 
 interface Props {
     font: Font;
@@ -32,15 +91,18 @@ export function FontInfoDialog({ font }: Props) {
                     <div className="flex h-full flex-col justify-between">
                         <div className="flex flex-row justify-between">
                             <DialogTitle>{font.name}</DialogTitle>
-                            <DialogClose>
+                            <DialogClose className="p-1">
                                 <Cross2Icon />
                             </DialogClose>
                         </div>
                         <div className="flex flex-grow flex-col justify-between">
                             {/* TODO: add other examples */}
-                            {/* TODO: syntax highlighting, copy button */}
-                            <pre className="rounded-sm bg-slate-100 text-xs">
-                                {`import { ${font.name.replaceAll(
+                            <CodeBlock
+                                language="tsx"
+                                theme={themes.dracula}
+                                lineNumbers
+                                copyButton
+                                code={`import { ${font.name.replaceAll(
                                     " ",
                                     "_",
                                 )} } from "next/font/google";
@@ -57,11 +119,11 @@ export default function MyApp({ Component, pageProps }) {
       <Component {...pageProps} />
     </main>
   );
-}
-`}
-                            </pre>
+}`}
+                            />
                             <div className="flex flex-row-reverse">
                                 <Link
+                                    className="p-1"
                                     target="_blank"
                                     href={`https://fonts.google.com/specimen/${encodeURIComponent(
                                         font.name,
