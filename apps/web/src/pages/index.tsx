@@ -65,8 +65,6 @@ export default function Home() {
                                 >
                                     <TrashIcon />
                                 </button>
-                                {/* TODO: show how to use (next snippet) */}
-                                {/* TODO: link to google font */}
                                 <FontInfoDialog font={font} />
                             </div>
                         ))
