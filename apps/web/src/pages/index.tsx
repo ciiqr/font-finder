@@ -86,7 +86,7 @@ export default function Home() {
                         google fonts through{" "}
                         <Link
                             className="text-blue-500 underline"
-                            href="https://nextjs.org/docs/pages/api-reference/components/font"
+                            href="https://nextjs.org/docs/pages/building-your-application/optimizing/fonts"
                         >
                             next/font
                         </Link>
