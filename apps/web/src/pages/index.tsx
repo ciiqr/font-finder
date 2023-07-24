@@ -18,7 +18,7 @@ const adobeNotDefFont = localFont({
 export default function Home() {
     // TODO: maybe have pre defined character sets you can cycle through (Aa, Bb, ..., +-=, '", fl, etc)
     const [text, setText] = useState(
-        "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789+-=~`@,.,@",
+        "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789+-=~$%`@,.",
     );
     // TODO: could store fonts in url...
     const [fonts, setFonts] = useState(defaultFonts);
