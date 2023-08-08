@@ -1,4 +1,4 @@
-/** @type {import('eslint').ESLint.ConfigData} */
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
     extends: [
         "@pentible/eslint-config-node",
