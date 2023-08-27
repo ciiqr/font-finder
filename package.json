@@ -8,7 +8,7 @@
         "./apps/*"
     ],
     "scripts": {
-        "prepare": "cp -n .env.example .env || true; husky install"
+        "prepare": "husky install"
     },
     "devDependencies": {
         "@pentible/check-package-lock": "0.74.0",
