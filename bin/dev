@@ -41,23 +41,6 @@ dev::initial::setup() {
 
     echo '==> dev reset'
     dev::reset
-
-    tput blink
-    tput bold
-    tput setaf 1
-    echo '==> please modify your shell configs'
-    tput sgr0
-    echo '    # ~/.zshrc
-    # ...
-    eval "$(rtx activate zsh)"
-    '
-
-    echo '==> you may want to configure rtx'
-    echo '    # ~/.config/rtx/config.toml
-    [settings]
-    missing_runtime_behavior = "autoinstall"
-    trusted_config_paths = ["~/Projects"]
-    '
 }
 
 dev::reset() {
