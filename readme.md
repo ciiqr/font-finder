@@ -7,15 +7,14 @@
     or `~/.bashrc`/`~/.bash_profile`)
 
 ```bash
-eval "$(rtx activate zsh)"
+eval "$(mise activate zsh)"
 # or for bash
-# eval "$(rtx activate bash)"
+# eval "$(mise activate bash)"
 ```
 
--   (optionally) configure rtx: `~/.config/rtx/config.toml`
+-   (optionally) configure mise: `~/.config/mise/settings.toml`
 
 ```toml
-[settings]
 trusted_config_paths = ["~/Projects"] # where ~/Projects is wherever you clone your repos
 ```
 
